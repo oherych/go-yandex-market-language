@@ -5,6 +5,7 @@ import (
 	"errors"
 	"gopkg.in/xmlpath.v2"
 	"io"
+	"strconv"
 	"time"
 )
 
@@ -18,6 +19,18 @@ type Shop struct {
 	Name    *string
 	Company *string
 	URL     *string
+
+	categories *Categories
+}
+
+type Category struct {
+	ID       uint
+	ParentID uint
+	Name     string
+}
+
+type Categories struct {
+	list map[uint]Category
 }
 
 func Read(r io.Reader) (Document, error) {
@@ -30,6 +43,11 @@ func Read(r io.Reader) (Document, error) {
 	return Document{root: root}, nil
 }
 
+func NewCategories() (c Categories) {
+	c.list = make(map[uint]Category, 0)
+	return
+}
+
 func (d Document) GetShop() *Shop {
 	iter := xmlpath.MustCompile("/yml_catalog/shop").Iter(d.root)
 	if !iter.Next() {
@@ -37,6 +55,15 @@ func (d Document) GetShop() *Shop {
 	}
 
 	return newShop(iter.Node())
+}
+
+func (s *Shop) GetCategories() *Categories {
+	if s.categories == nil {
+		c := createCategories(s.root)
+		s.categories = &c
+	}
+
+	return s.categories
 }
 
 func (d Document) ReadDate() (time.Time, error) {
@@ -61,8 +88,57 @@ func (s *Shop) load() {
 	}
 }
 
+func (c *Categories) Add(category Category) {
+	c.list[category.ID] = category
+}
+
+func (c Categories) Length() int {
+	return len(c.list)
+}
+
+func (c Categories) Get(ID uint) (Category, bool) {
+	element, found := c.list[ID]
+	return element, found
+}
+
 func newShop(root *xmlpath.Node) *Shop {
 	shop := Shop{root: root}
 	shop.load()
 	return &shop
+}
+
+func createCategories(root *xmlpath.Node) Categories {
+	c := NewCategories()
+
+	iter := xmlpath.MustCompile("categories/category").Iter(root)
+	for iter.Next() {
+		category := Category{}
+
+		node := iter.Node()
+		if val, ok := xmlpath.MustCompile("@id").String(node); ok {
+			id, err := strconv.ParseUint(val, 10, 32)
+			if err != nil {
+				//TODO: ERROR
+				continue
+			}
+
+			category.ID = uint(id)
+		}
+
+		if val, ok := xmlpath.MustCompile("@parentId").String(node); ok {
+			id, err := strconv.ParseUint(val, 10, 32)
+			if err != nil {
+				//TODO: ERROR
+				continue
+			}
+
+			category.ParentID = uint(id)
+		}
+
+		category.Name = node.String()
+
+		c.Add(category)
+	}
+
+	return c
 }

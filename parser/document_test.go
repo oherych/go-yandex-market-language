@@ -41,6 +41,29 @@ func TestDocument_GetShop(t *testing.T) {
 	}
 }
 
+func TestDocument_GetCategories(t *testing.T) {
+	document, _ := read()
+	shop := document.GetShop()
+	if shop == nil {
+		t.Error("Shop cannot be nil")
+	}
+
+	categories := shop.GetCategories()
+	if categories.Length() != 19 {
+		t.Errorf("GetCategories.Length(). exp: '%v', got: '%v'", 19, categories.Length())
+	}
+
+	category, found := categories.Get(1)
+	if !found {
+		t.Error("Category not found")
+	}
+
+	if category.Name != "Оргтехника" {
+		t.Errorf("Wrong category name")
+	}
+
+}
+
 func read() (Document, error) {
 	file, _ := os.Open("../fixtures/example.xml")
 
