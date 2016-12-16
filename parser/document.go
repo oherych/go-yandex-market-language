@@ -10,6 +10,7 @@ import (
 )
 
 type offerInterator func() *Offer
+type OfferType string
 
 type Document struct {
 	root *xmlpath.Node
@@ -36,8 +37,20 @@ type Categories struct {
 }
 
 type Offer struct {
-	ID string
+	ID   string
+	Type OfferType
 }
+
+const (
+	OffertTypeDefault     OfferType = ""
+	OffertTypeVendorModel OfferType = "vendor.model"
+	OffertTypeMedicine    OfferType = "medicine"
+	OffertTypeBooks       OfferType = "books"
+	OffertTypeAudioBooks  OfferType = "audiobooks"
+	OffertTypeArtistTitle OfferType = "artist.title"
+	OffertTypeEventTicket OfferType = "event-ticket"
+	OffertTypeTour        OfferType = "tour"
+)
 
 func Read(r io.Reader) (Document, error) {
 	xmlDecoder := xml.NewDecoder(r)
@@ -52,6 +65,10 @@ func Read(r io.Reader) (Document, error) {
 func NewCategories() (c Categories) {
 	c.list = make(map[uint]Category, 0)
 	return
+}
+
+func (o OfferType) String() string {
+	return string(o)
 }
 
 func (d Document) GetShop() *Shop {
@@ -90,6 +107,10 @@ func (s Shop) ReadOffers() offerInterator {
 func (o *Offer) LoadFromNode(node *xmlpath.Node) {
 	if val, ok := xmlpath.MustCompile("@id").String(node); ok {
 		o.ID = val
+	}
+
+	if val, ok := xmlpath.MustCompile("@type").String(node); ok {
+		o.Type = OfferType(val)
 	}
 }
 

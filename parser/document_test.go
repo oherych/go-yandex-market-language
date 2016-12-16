@@ -87,7 +87,7 @@ func TestShop_ReadOffers(t *testing.T) {
 	}
 
 	table := map[string]Offer{
-		"12341": {ID: "12341"},
+		"12341": {ID: "12341", Type:OffertTypeVendorModel},
 	}
 
 	for _, item := range list {
