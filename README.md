@@ -11,7 +11,7 @@
     * [x] vendor
     * [ ] vendorCode
     * [ ] name
-    * [ ] url
+    * [x] url
     * [x] model
     * [ ] typePrefix
     * [ ] picture

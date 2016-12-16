@@ -93,6 +93,7 @@ func TestShop_ReadOffers(t *testing.T) {
 			Available: true,
 			Vendor:    "НP",
 			Model:     "Color LaserJet 3000",
+			URL:       "http://magazin.ru/product_page.asp?pid=14344",
 		},
 	}
 
