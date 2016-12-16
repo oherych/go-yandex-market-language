@@ -40,6 +40,7 @@ type Offer struct {
 	ID        string
 	Type      OfferType
 	Available bool
+	Vendor    string
 }
 
 const (
@@ -118,6 +119,10 @@ func (o *Offer) LoadFromNode(node *xmlpath.Node) {
 		o.Available = (val == "true")
 	} else {
 		o.Available = true
+	}
+
+	if val, ok := xmlpath.MustCompile("vendor").String(node); ok {
+		o.Vendor = val
 	}
 }
 

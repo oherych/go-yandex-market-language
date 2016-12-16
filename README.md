@@ -8,7 +8,7 @@
         * [x] id
         * [x] type
         * [x] available
-    * [ ] vendor
+    * [x] vendor
     * [ ] vendorCode
     * [ ] name
     * [ ] url
