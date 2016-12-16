@@ -37,8 +37,9 @@ type Categories struct {
 }
 
 type Offer struct {
-	ID   string
-	Type OfferType
+	ID        string
+	Type      OfferType
+	Available bool
 }
 
 const (
@@ -111,6 +112,12 @@ func (o *Offer) LoadFromNode(node *xmlpath.Node) {
 
 	if val, ok := xmlpath.MustCompile("@type").String(node); ok {
 		o.Type = OfferType(val)
+	}
+
+	if val, ok := xmlpath.MustCompile("@available").String(node); ok {
+		o.Available = (val == "true")
+	} else {
+		o.Available = true
 	}
 }
 
