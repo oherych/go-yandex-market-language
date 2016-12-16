@@ -9,6 +9,8 @@ import (
 	"time"
 )
 
+type offerInterator func() *Offer
+
 type Document struct {
 	root *xmlpath.Node
 }
@@ -31,6 +33,10 @@ type Category struct {
 
 type Categories struct {
 	list map[uint]Category
+}
+
+type Offer struct {
+	ID *string
 }
 
 func Read(r io.Reader) (Document, error) {
@@ -64,6 +70,27 @@ func (s *Shop) GetCategories() *Categories {
 	}
 
 	return s.categories
+}
+
+func (s Shop) ReadOffers() offerInterator {
+	iter := xmlpath.MustCompile("offers/offer").Iter(s.root)
+
+	return func() *Offer {
+		if !iter.Next() {
+			return nil
+		}
+
+		offer := Offer{}
+		offer.LoadFromNode(iter.Node())
+
+		return &offer
+	}
+}
+
+func (o *Offer) LoadFromNode(node *xmlpath.Node) {
+	if val, ok := xmlpath.MustCompile("@id").String(node); ok {
+		o.ID = &val
+	}
 }
 
 func (d Document) ReadDate() (time.Time, error) {

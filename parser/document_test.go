@@ -64,6 +64,29 @@ func TestDocument_GetCategories(t *testing.T) {
 
 }
 
+func TestShop_ReadOffers(t *testing.T) {
+	document, _ := read()
+	shop := document.GetShop()
+	if shop == nil {
+		t.Error("Shop cannot be nil")
+	}
+
+	iter := shop.ReadOffers()
+	list := make([]*Offer, 0)
+	for {
+		offer := iter()
+		if offer == nil {
+			break
+		}
+
+		list = append(list, offer)
+	}
+
+	if len(list) != 7 {
+		t.Errorf("Wrong number of offers. exp: '%v', got: '%v'", 7, len(list))
+	}
+}
+
 func read() (Document, error) {
 	file, _ := os.Open("../fixtures/example.xml")
 
