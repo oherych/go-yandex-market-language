@@ -36,7 +36,7 @@ type Categories struct {
 }
 
 type Offer struct {
-	ID *string
+	ID string
 }
 
 func Read(r io.Reader) (Document, error) {
@@ -89,7 +89,7 @@ func (s Shop) ReadOffers() offerInterator {
 
 func (o *Offer) LoadFromNode(node *xmlpath.Node) {
 	if val, ok := xmlpath.MustCompile("@id").String(node); ok {
-		o.ID = &val
+		o.ID = val
 	}
 }
 

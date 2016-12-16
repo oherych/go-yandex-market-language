@@ -85,6 +85,23 @@ func TestShop_ReadOffers(t *testing.T) {
 	if len(list) != 7 {
 		t.Errorf("Wrong number of offers. exp: '%v', got: '%v'", 7, len(list))
 	}
+
+	table := map[string]Offer{
+		"12341": {ID: "12341"},
+	}
+
+	for _, item := range list {
+		exp, found := table[item.ID]
+		if !found {
+			//TODO: enable me
+			//t.Errorf("Offer not found, ID: %v", item.ID)
+			continue
+		}
+
+		if *item != exp {
+			t.Errorf("Offer is not equal. exp: '%+v', got: '%+v'", exp, item)
+		}
+	}
 }
 
 func read() (Document, error) {

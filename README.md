@@ -4,8 +4,8 @@
 * [x] categories
 * [ ] adult
 * [ ] offers
-    * attributes
-        * [ ] id
+    attributes
+        * [x] id
         * [ ] type
         * [ ] available
     * [ ] vendor
