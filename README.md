@@ -12,7 +12,7 @@
     * [ ] vendorCode
     * [ ] name
     * [ ] url
-    * [ ] model
+    * [x] model
     * [ ] typePrefix
     * [ ] picture
     * [ ] description
