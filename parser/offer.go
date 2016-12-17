@@ -24,6 +24,7 @@ type Offer struct {
 	Model     string
 	URL       string
 	Name      string
+	Picture   []string
 }
 
 func (o OfferType) String() string {
@@ -59,5 +60,10 @@ func (o *Offer) LoadFromNode(node *xmlpath.Node) {
 
 	if val, ok := xmlpath.MustCompile("name").String(node); ok {
 		o.Name = val
+	}
+
+	o.Picture = make([]string, 0)
+	for iter := xmlpath.MustCompile("picture").Iter(node); iter.Next();  {
+		o.Picture = append(o.Picture, iter.Node().String())
 	}
 }

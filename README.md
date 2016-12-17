@@ -14,7 +14,7 @@
     * [x] url
     * [x] model
     * [ ] typePrefix
-    * [ ] picture
+    * [x] picture
     * [ ] description
     * [ ] cpa
     * [ ] sales_notes

@@ -2,6 +2,7 @@ package parser
 
 import (
 	"os"
+	"reflect"
 	"testing"
 	"time"
 )
@@ -72,14 +73,14 @@ func TestShop_ReadOffers(t *testing.T) {
 	}
 
 	iter := shop.ReadOffers()
-	list := make([]*Offer, 0)
+	list := make([]Offer, 0)
 	for {
 		offer := iter()
 		if offer == nil {
 			break
 		}
 
-		list = append(list, offer)
+		list = append(list, *offer)
 	}
 
 	if len(list) != 7 {
@@ -95,6 +96,7 @@ func TestShop_ReadOffers(t *testing.T) {
 			Model:     "Color LaserJet 3000",
 			URL:       "http://magazin.ru/product_page.asp?pid=14344",
 			Name:      "Принтер НP Color LaserJet 3000",
+			Picture:   []string{"http://magazin.ru/img/device14344.jpg"},
 		},
 	}
 
@@ -106,7 +108,7 @@ func TestShop_ReadOffers(t *testing.T) {
 			continue
 		}
 
-		if *item != exp {
+		if !reflect.DeepEqual(item, exp) {
 			t.Errorf("Offer is not equal. exp: '%+v', got: '%+v'", exp, item)
 		}
 	}
