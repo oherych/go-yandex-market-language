@@ -10,6 +10,7 @@ type Shop struct {
 	URL     *string
 
 	categories *Categories
+	currencies *Currencies
 }
 
 func (s *Shop) GetCategories() *Categories {
@@ -20,6 +21,16 @@ func (s *Shop) GetCategories() *Categories {
 	}
 
 	return s.categories
+}
+
+func (s *Shop) GetCurrencies() *Currencies {
+	if s.currencies == nil {
+		c := NewCurrencies()
+		s.currencies = &c
+		s.currencies.load(s.root)
+	}
+
+	return s.currencies
 }
 
 func (s Shop) ReadOffers() offerInterator {
