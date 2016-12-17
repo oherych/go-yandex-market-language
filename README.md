@@ -10,7 +10,7 @@
         * [x] available
     * [x] vendor
     * [ ] vendorCode
-    * [ ] name
+    * [x] name
     * [x] url
     * [x] model
     * [ ] typePrefix

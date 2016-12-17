@@ -47,6 +47,7 @@
                 <currencyId>RUR</currencyId>
                 <categoryId type="Own">101</categoryId>
                 <picture>http://magazin.ru/img/device14344.jpg</picture>
+                <name>Принтер НP Color LaserJet 3000</name>
                 <delivery>true</delivery>
                 <local_delivery_cost>300</local_delivery_cost>
                 <typePrefix>Принтер</typePrefix>
