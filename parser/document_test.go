@@ -63,6 +63,20 @@ func TestDocument_GetCategories(t *testing.T) {
 		t.Errorf("Wrong category name")
 	}
 
+	currencies := shop.GetCurrencies()
+	if currencies.Length() != 3 {
+		t.Errorf("GetCategories.Length(). exp: '%v', got: '%v'", 3, currencies.Length())
+	}
+
+	currency, found := currencies.Get("USD")
+	if !found {
+		t.Error("Currency not found")
+	}
+
+	if currency.rate != 30 {
+		t.Errorf("Wrong currency rate")
+	}
+
 }
 
 func TestShop_ReadOffers(t *testing.T) {

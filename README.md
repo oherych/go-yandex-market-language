@@ -1,6 +1,9 @@
 ##### TODO:
 
-* [ ] currencies
+* [*] currencies
+    * [*] id
+    * [*] rate
+    * [ ] plus
 * [x] categories
 * [ ] adult
 * [ ] offers
