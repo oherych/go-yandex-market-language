@@ -25,6 +25,8 @@ type Offer struct {
 	URL       string
 	Name      string
 	Picture   []string
+	Price     string
+	OldPrice  string
 }
 
 func (o OfferType) String() string {
@@ -63,7 +65,15 @@ func (o *Offer) LoadFromNode(node *xmlpath.Node) {
 	}
 
 	o.Picture = make([]string, 0)
-	for iter := xmlpath.MustCompile("picture").Iter(node); iter.Next();  {
+	for iter := xmlpath.MustCompile("picture").Iter(node); iter.Next(); {
 		o.Picture = append(o.Picture, iter.Node().String())
+	}
+
+	if val, ok := xmlpath.MustCompile("price").String(node); ok {
+		o.Price = val
+	}
+
+	if val, ok := xmlpath.MustCompile("oldprice").String(node); ok {
+		o.OldPrice = val
 	}
 }

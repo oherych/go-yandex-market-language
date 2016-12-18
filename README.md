@@ -1,8 +1,8 @@
 ##### TODO:
 
-* [*] currencies
-    * [*] id
-    * [*] rate
+* [x] currencies
+    * [x] id
+    * [x] rate
     * [ ] plus
 * [x] categories
 * [ ] adult
@@ -27,8 +27,8 @@
     * [ ] store
     * [ ] adult
     * [ ] barcode
-    * [ ] price
-    * [ ] oldprice
+    * [x] price
+    * [x] oldprice
     * [ ] currencyId
     * [ ] categoryId
     * [ ] category

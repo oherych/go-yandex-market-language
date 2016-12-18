@@ -111,6 +111,8 @@ func TestShop_ReadOffers(t *testing.T) {
 			URL:       "http://magazin.ru/product_page.asp?pid=14344",
 			Name:      "Принтер НP Color LaserJet 3000",
 			Picture:   []string{"http://magazin.ru/img/device14344.jpg"},
+			Price:     "15000",
+			OldPrice:  "25000",
 		},
 	}
 
