@@ -113,6 +113,10 @@ func TestShop_ReadOffers(t *testing.T) {
 			Picture:   []string{"http://magazin.ru/img/device14344.jpg"},
 			Price:     "15000",
 			OldPrice:  "25000",
+			Param: map[string]string{
+				"загрузка": "100",
+				"скорость": "3",
+			},
 		},
 	}
 

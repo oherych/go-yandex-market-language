@@ -37,6 +37,9 @@
     * [ ] country_of_origin
     * [ ] age
     * [ ] param
+        * [x] name
+        * [x] value
+        * [ ] unit
     * [ ] weight
     * [ ] dimensions
     * [ ] group_id

@@ -27,6 +27,7 @@ type Offer struct {
 	Picture   []string
 	Price     string
 	OldPrice  string
+	Param     map[string]string
 }
 
 func (o OfferType) String() string {
@@ -75,5 +76,11 @@ func (o *Offer) LoadFromNode(node *xmlpath.Node) {
 
 	if val, ok := xmlpath.MustCompile("oldprice").String(node); ok {
 		o.OldPrice = val
+	}
+
+	o.Param = make(map[string]string, 0)
+	for iter := xmlpath.MustCompile("param").Iter(node); iter.Next(); {
+		pname, _ := xmlpath.MustCompile("@name").String(iter.Node())
+		o.Param[pname] = iter.Node().String()
 	}
 }
