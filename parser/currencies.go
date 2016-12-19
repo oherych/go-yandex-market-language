@@ -55,15 +55,30 @@ func (c *Currencies) load(root *xmlpath.Node) {
 		}
 
 		if val, ok := xmlpath.MustCompile("@rate").String(node); ok {
-			rate, err := strconv.ParseFloat(val, 32)
-			if err != nil {
-				//TODO: ERROR
-				continue
-			}
-
-			currency.rate = CurrencyRate(rate)
+			currency.rate = c.parseCurrencyRate(val)
 		}
 
 		c.Add(currency)
+	}
+}
+
+func (c *Currencies) parseCurrencyRate(in string) CurrencyRate {
+	switch in {
+	case "CBRF":
+		return CurrencyRateCBRF
+	case "NBU":
+		return CurrencyRateNBU
+	case "NBK":
+		return CurrencyRateNBK
+	case "СВ":
+		return CurrencyRateСВ
+	default:
+		rate, err := strconv.ParseFloat(in, 32)
+		if err != nil {
+			//TODO: ERROR
+			return CurrencyRate(0)
+		}
+
+		return CurrencyRate(rate)
 	}
 }

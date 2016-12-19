@@ -7,9 +7,11 @@
         <url>shop url</url>
 
         <currencies>
-            <currency id="RUR" rate="1" plus="0"/>
-            <currency id="USD" rate="30" />
-            <currency id="EUR" rate="40" />
+            <currency id="RUR" rate="1"/>
+            <currency id="USD" rate="23.98"/>
+            <currency id="EUR" rate="CBRF"/>
+            <currency id="UAH" rate="NBU"/>
+            <currency id="KZT" rate="CB"/>
         </currencies>
 
         <categories>

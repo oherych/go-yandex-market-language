@@ -76,8 +76,8 @@ func TestShop_ReadOffers(t *testing.T) {
 	}
 
 	currencies := shop.GetCurrencies()
-	if currencies.Length() != 3 {
-		t.Errorf("GetCategories.Length(). exp: '%v', got: '%v'", 3, currencies.Length())
+	if currencies.Length() != 5 {
+		t.Errorf("GetCategories.Length(). exp: '%v', got: '%v'", 5, currencies.Length())
 	}
 
 	currency, found := currencies.Get("USD")
@@ -85,7 +85,7 @@ func TestShop_ReadOffers(t *testing.T) {
 		t.Error("Currency not found")
 	}
 
-	if currency.rate != 30 {
+	if currency.rate != 23.98 {
 		t.Errorf("Wrong currency rate")
 	}
 
