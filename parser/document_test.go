@@ -118,6 +118,7 @@ func TestShop_ReadOffers(t *testing.T) {
 				"скорость": "3",
 			},
 			CurrencyID: "RUR",
+			CategoryID: "101",
 		},
 	}
 

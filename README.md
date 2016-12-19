@@ -30,7 +30,7 @@
     * [x] price
     * [x] oldprice
     * [x] currencyId
-    * [ ] categoryId
+    * [x] categoryId
     * [ ] category
     * [ ] outlets
     * [ ] manufacturer_warranty

@@ -29,6 +29,7 @@ type Offer struct {
 	OldPrice   string
 	Param      map[string]string
 	CurrencyID string
+	CategoryID string
 }
 
 func (o OfferType) String() string {
@@ -87,6 +88,10 @@ func (o *Offer) LoadFromNode(node *xmlpath.Node) {
 
 	if val, ok := xmlpath.MustCompile("currencyId").String(node); ok {
 		o.CurrencyID = val
+	}
+
+	if val, ok := xmlpath.MustCompile("categoryId").String(node); ok {
+		o.CategoryID = val
 	}
 
 }
