@@ -7,22 +7,42 @@ import (
 	"time"
 )
 
-func TestRead(t *testing.T) {
-	read()
-}
+var (
+	offersTable = map[string]Offer{
+		"12341": {
+			ID:        "12341",
+			Type:      OffertTypeVendorModel,
+			Available: true,
+			Vendor:    "НP",
+			Model:     "Color LaserJet 3000",
+			URL:       "http://magazin.ru/product_page.asp?pid=14344",
+			Name:      "Принтер НP Color LaserJet 3000",
+			Picture:   []string{"http://magazin.ru/img/device14344.jpg"},
+			Price:     "15000",
+			OldPrice:  "25000",
+			Param: map[string]string{
+				"загрузка": "100",
+				"скорость": "3",
+			},
+			CurrencyID: "RUR",
+			CategoryID: "101",
+		},
+	}
 
-func TestDocument_ReadDate(t *testing.T) {
-	document, _ := read()
+	categoriesTable = map[uint]Category{
+		1: {},
+	}
+)
 
+
+func TestShop_ReadOffers(t *testing.T) {
+	file, _ := os.Open("../fixtures/example.xml")
+	document, _ := Read(file)
 	date, _ := document.ReadDate()
 	exp := time.Date(2010, 4, 1, 17, 0, 0, 0, date.Location())
 	if !date.Equal(exp) {
 		t.Errorf("Date is not equal. exp: '%v', got: '%v'", exp, date)
 	}
-}
-
-func TestDocument_GetShop(t *testing.T) {
-	document, _ := read()
 
 	shop := document.GetShop()
 	if shop == nil {
@@ -39,14 +59,6 @@ func TestDocument_GetShop(t *testing.T) {
 
 	if shop.URL == nil || *shop.URL != "shop url" {
 		t.Errorf("Wrong url. exp: '%v', got: '%v'", "shop url", *shop.Name)
-	}
-}
-
-func TestDocument_GetCategories(t *testing.T) {
-	document, _ := read()
-	shop := document.GetShop()
-	if shop == nil {
-		t.Error("Shop cannot be nil")
 	}
 
 	categories := shop.GetCategories()
@@ -77,15 +89,6 @@ func TestDocument_GetCategories(t *testing.T) {
 		t.Errorf("Wrong currency rate")
 	}
 
-}
-
-func TestShop_ReadOffers(t *testing.T) {
-	document, _ := read()
-	shop := document.GetShop()
-	if shop == nil {
-		t.Error("Shop cannot be nil")
-	}
-
 	iter := shop.ReadOffers()
 	list := make([]Offer, 0)
 	for {
@@ -101,29 +104,8 @@ func TestShop_ReadOffers(t *testing.T) {
 		t.Errorf("Wrong number of offers. exp: '%v', got: '%v'", 7, len(list))
 	}
 
-	table := map[string]Offer{
-		"12341": {
-			ID:        "12341",
-			Type:      OffertTypeVendorModel,
-			Available: true,
-			Vendor:    "НP",
-			Model:     "Color LaserJet 3000",
-			URL:       "http://magazin.ru/product_page.asp?pid=14344",
-			Name:      "Принтер НP Color LaserJet 3000",
-			Picture:   []string{"http://magazin.ru/img/device14344.jpg"},
-			Price:     "15000",
-			OldPrice:  "25000",
-			Param: map[string]string{
-				"загрузка": "100",
-				"скорость": "3",
-			},
-			CurrencyID: "RUR",
-			CategoryID: "101",
-		},
-	}
-
 	for _, item := range list {
-		exp, found := table[item.ID]
+		exp, found := offersTable[item.ID]
 		if !found {
 			//TODO: enable me
 			//t.Errorf("Offer not found, ID: %v", item.ID)
@@ -134,10 +116,4 @@ func TestShop_ReadOffers(t *testing.T) {
 			t.Errorf("Offer is not equal. exp: '%+v', got: '%+v'", exp, item)
 		}
 	}
-}
-
-func read() (Document, error) {
-	file, _ := os.Open("../fixtures/example.xml")
-
-	return Read(file)
 }
