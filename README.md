@@ -29,7 +29,7 @@
     * [ ] barcode
     * [x] price
     * [x] oldprice
-    * [ ] currencyId
+    * [x] currencyId
     * [ ] categoryId
     * [ ] category
     * [ ] outlets

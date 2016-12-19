@@ -17,17 +17,18 @@ type offerInterator func() *Offer
 type OfferType string
 
 type Offer struct {
-	ID        string
-	Type      OfferType
-	Available bool
-	Vendor    string
-	Model     string
-	URL       string
-	Name      string
-	Picture   []string
-	Price     string
-	OldPrice  string
-	Param     map[string]string
+	ID         string
+	Type       OfferType
+	Available  bool
+	Vendor     string
+	Model      string
+	URL        string
+	Name       string
+	Picture    []string
+	Price      string
+	OldPrice   string
+	Param      map[string]string
+	CurrencyID string
 }
 
 func (o OfferType) String() string {
@@ -83,4 +84,9 @@ func (o *Offer) LoadFromNode(node *xmlpath.Node) {
 		pname, _ := xmlpath.MustCompile("@name").String(iter.Node())
 		o.Param[pname] = iter.Node().String()
 	}
+
+	if val, ok := xmlpath.MustCompile("currencyId").String(node); ok {
+		o.CurrencyID = val
+	}
+
 }
