@@ -72,7 +72,17 @@ func TestShop_ReadOffers(t *testing.T) {
 	}
 
 	if category.Name != "Оргтехника" {
-		t.Errorf("Wrong category name")
+		t.Error("Wrong category name")
+	}
+	
+	categoriesList := categories.GetAll()
+	category, found = categoriesList[1]
+	if !found {
+		t.Error("Category not found")
+	}
+
+	if category.Name != "Оргтехника" {
+		t.Error("Wrong category name")
 	}
 
 	currencies := shop.GetCurrencies()
@@ -86,7 +96,7 @@ func TestShop_ReadOffers(t *testing.T) {
 	}
 
 	if currency.rate != 23.98 {
-		t.Errorf("Wrong currency rate")
+		t.Error("Wrong currency rate")
 	}
 
 	iter := shop.ReadOffers()

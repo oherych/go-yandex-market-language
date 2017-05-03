@@ -34,6 +34,10 @@ func (c Categories) Get(ID uint) (Category, bool) {
 	return element, found
 }
 
+func (c Categories) GetAll() map[uint]Category {
+	return c.list
+}
+
 func (c *Categories) load(root *xmlpath.Node) {
 
 	iter := xmlpath.MustCompile("categories/category").Iter(root)
